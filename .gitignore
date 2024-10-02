@@ -1,5 +1,5 @@
 # Ignore Jupyter Book build output
-_build/
+_build/*
 _site/
 jupyter_execute/
 **/.ipynb_checkpoints
