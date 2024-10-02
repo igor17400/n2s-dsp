@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>dsp-174 &#8212; A Not-Too-Short, Not-Quite-Long Summary of Signal Processing</title>
+    <title>A Not-Too-Short, Not-Quite-Long Summary of Signal Processing &#8212; A Not-Too-Short, Not-Quite-Long Summary of Signal Processing</title>
   
   
   
@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/proof.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=87e54e7c" />
@@ -185,8 +185,13 @@
 <li class="toctree-l1"><a class="reference internal" href="discrete-continous-dsp.html">Discrete and Continuous Signal Processing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="signals.html">Signals</a></li>
 <li class="toctree-l1"><a class="reference internal" href="analog-digital-domains.html">Analog and Digital Domains</a></li>
-<li class="toctree-l1"><a class="reference internal" href="notebooks.html">Content with notebooks</a></li>
-<li class="toctree-l1"><a class="reference internal" href="markdown-notebooks.html">Notebooks with MyST Markdown</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transformations-signals.html">Transformation of signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="even-odd-signal.html">Even and Odd Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="common-signals-engineering.html">Common Signals in Engineering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="singularity-functions.html">Singularity Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="convolution.html">Convolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fourier-series.html">Fourier Series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fourier-transform.html">Fourier Transform</a></li>
 </ul>
 
     </div>
@@ -359,7 +364,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -370,11 +377,23 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>dsp-174</h1>
+    <h1>A Not-Too-Short, Not-Quite-Long Summary of Signal Processing</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-to-expect">WHAT TO EXPECT:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-started">Getting Started</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#topics-covered">Topics Covered</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contributing">Contributing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#license">License</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -384,8 +403,50 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="dsp-174">
-<h1>dsp-174<a class="headerlink" href="#dsp-174" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="a-not-too-short-not-quite-long-summary-of-signal-processing">
+<h1>A Not-Too-Short, Not-Quite-Long Summary of Signal Processing<a class="headerlink" href="#a-not-too-short-not-quite-long-summary-of-signal-processing" title="Link to this heading">#</a></h1>
+<p><strong>Author</strong>: Igor L.R. Azevedo - The University of Tokyo &amp; University of Brasilia</p>
+<p><strong>Email</strong>: <a class="reference external" href="mailto:igorlima1740&#37;&#52;&#48;gmail&#46;com">igorlima1740<span>&#64;</span>gmail<span>&#46;</span>com</a></p>
+<p><strong>GitHub</strong>: igor17400/dsp-174</p>
+<section id="what-to-expect">
+<h2>WHAT TO EXPECT:<a class="headerlink" href="#what-to-expect" title="Link to this heading">#</a></h2>
+<p>This work aims to provide a summary of signal processing that achieves a balance, as indicated by the title—not overly concise yet not as exhaustive as a comprehensive textbook. My intention was to explore essential content with more depth than a typical summary offers, yet not as extensively as a canonical textbook. At the same time, the idea is to combine several high-quality tutorials available online, which might be helpful in understanding and gaining a clear vision of signal processing. While this isn’t just a collection of equations, it also isn’t a book or paper that aims to make a significant contribution. Ultimately, my goal is to present a practical approach to signal processing that may be useful for those trying to better understand this subject. In any case, I hope this proves helpful to someone beyond myself. If you’ve read this far, thank you, and stay safe!</p>
+</section>
+<section id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading">#</a></h2>
+<p>To use this summary just access the following link: <a class="github reference external" href="https://github.com/igor17400/dsp-174.git">igor17400/dsp-174.git</a></p>
+</section>
+<section id="topics-covered">
+<h2>Topics Covered<a class="headerlink" href="#topics-covered" title="Link to this heading">#</a></h2>
+<p>This summary includes, but is not limited to, the following signal processing topics:</p>
+<ul class="simple">
+<li><p>Fourier Transform and its applications</p></li>
+<li><p>Digital filters (FIR and IIR)</p></li>
+<li><p>Sampling and quantization</p></li>
+<li><p>Discrete-time signals and systems</p></li>
+<li><p>Frequency analysis</p></li>
+<li><p>Signal modulation techniques</p></li>
+</ul>
+</section>
+<section id="contributing">
+<h2>Contributing<a class="headerlink" href="#contributing" title="Link to this heading">#</a></h2>
+<p>Contributions to improve this summary are welcome! If you’d like to contribute:</p>
+<ol class="arabic simple">
+<li><p>Fork the repository</p></li>
+<li><p>Create a new branch (<code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">-b</span> <span class="pre">feature/your-feature-name</span></code>)</p></li>
+<li><p>Make your changes</p></li>
+<li><p>Commit your changes (<code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">commit</span> <span class="pre">-am</span> <span class="pre">'Add</span> <span class="pre">some</span> <span class="pre">feature'</span></code>)</p></li>
+<li><p>Push to the branch (<code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span> <span class="pre">origin</span> <span class="pre">feature/your-feature-name</span></code>)</p></li>
+<li><p>Create a new Pull Request</p></li>
+</ol>
+</section>
+<section id="license">
+<h2>License<a class="headerlink" href="#license" title="Link to this heading">#</a></h2>
+<p>This project is licensed under the MIT License - see the <a class="reference internal" href="#LICENSE"><span class="xref myst">LICENSE</span></a> file for details.</p>
+<hr class="docutils" />
+<p>I hope this proves to be helpful to someone other than just me!</p>
+<p><code class="docutils literal notranslate"><span class="pre">✧⁺⸜(^-^)⸝⁺✧</span></code></p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -424,6 +485,25 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-to-expect">WHAT TO EXPECT:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-started">Getting Started</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#topics-covered">Topics Covered</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contributing">Contributing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#license">License</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

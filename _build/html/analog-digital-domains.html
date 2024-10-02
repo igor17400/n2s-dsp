@@ -188,7 +188,12 @@
 <li class="toctree-l1"><a class="reference internal" href="signals.html">Signals</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Analog and Digital Domains</a></li>
 <li class="toctree-l1"><a class="reference internal" href="transformations-signals.html">Transformation of signals</a></li>
-<li class="toctree-l1"><a class="reference internal" href="markdown-notebooks.html">Notebooks with MyST Markdown</a></li>
+<li class="toctree-l1"><a class="reference internal" href="even-odd-signal.html">Even and Odd Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="common-signals-engineering.html">Common Signals in Engineering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="singularity-functions.html">Singularity Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="convolution.html">Convolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fourier-series.html">Fourier Series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fourier-transform.html">Fourier Transform</a></li>
 </ul>
 
     </div>
@@ -548,7 +553,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/e511b1c604d4e18d28c2e3d1e43ee639f6f1ea02966d90c4b2e3690ba8165caa.png" src="_images/e511b1c604d4e18d28c2e3d1e43ee639f6f1ea02966d90c4b2e3690ba8165caa.png" />
+<img alt="_images/756bf2b8d479ad302710d02e28e1b476f4347eb093d1bbc0e30a3682de6fc214.png" src="_images/756bf2b8d479ad302710d02e28e1b476f4347eb093d1bbc0e30a3682de6fc214.png" />
 </div>
 </div>
 </section>
@@ -597,7 +602,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/183e047b88661fba557ebcbdd54477fbee8a2ebda03784bafe580dc1209078c5.png" src="_images/183e047b88661fba557ebcbdd54477fbee8a2ebda03784bafe580dc1209078c5.png" />
+<img alt="_images/fb428f65d62e3b5ab2cbcdbeb24f827f84bc4817b0ac6103731b696d20ce1707.png" src="_images/fb428f65d62e3b5ab2cbcdbeb24f827f84bc4817b0ac6103731b696d20ce1707.png" />
 </div>
 </div>
 </section>
@@ -633,7 +638,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/2a366dcd2eced6fd03808626538bdc6af168f303fb8ce5cd643eab912730762b.png" src="_images/2a366dcd2eced6fd03808626538bdc6af168f303fb8ce5cd643eab912730762b.png" />
+<img alt="_images/28045eb40a11eb03459459c56c3c550eb0fac424dd4613d0a20dc593248e7f5d.png" src="_images/28045eb40a11eb03459459c56c3c550eb0fac424dd4613d0a20dc593248e7f5d.png" />
 </div>
 </div>
 <blockquote>
@@ -708,7 +713,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/695f7728f7ab005350d4912aaf6fea79769561799938342760129fd26f06ac2e.png" src="_images/695f7728f7ab005350d4912aaf6fea79769561799938342760129fd26f06ac2e.png" />
+<img alt="_images/eff006ecb80fab5c0268979dc714809be7ebb1b8ceca0d164b7e46088862b793.png" src="_images/eff006ecb80fab5c0268979dc714809be7ebb1b8ceca0d164b7e46088862b793.png" />
 </div>
 </div>
 </section>
@@ -837,8 +842,18 @@ y(t) = \mathcal{F}^{-1}\{Y(f)\}
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/59960a1ef8a1f58eef009cff852f6d09cccb6b3183a5893c5139b2018f14e0cb.png" src="_images/59960a1ef8a1f58eef009cff852f6d09cccb6b3183a5893c5139b2018f14e0cb.png" />
-<img alt="_images/84075e7639487f5758c49f9732ec51da33a6e71d23117928b6af4a0da43cd4dd.png" src="_images/84075e7639487f5758c49f9732ec51da33a6e71d23117928b6af4a0da43cd4dd.png" />
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">line</span> <span class="mi">3</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="ne">----&gt; </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">scipy.signal</span> <span class="kn">import</span> <span class="n">firwin</span><span class="p">,</span> <span class="n">lfilter</span><span class="p">,</span> <span class="n">freqz</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="c1"># Sample rate and desired cutoff frequencies (in Hz).</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="n">sample_rate</span> <span class="o">=</span> <span class="mf">1000.0</span>  <span class="c1"># Sampling rate in Hz</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;scipy&#39;
+</pre></div>
+</div>
 </div>
 </div>
 </section>

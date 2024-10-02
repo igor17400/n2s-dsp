@@ -1,0 +1,30 @@
+# Ignore Jupyter Book build output
+_build/
+_site/
+jupyter_execute/
+**/.ipynb_checkpoints
+**/__pycache__/
+**/*.pyc
+
+# Ignore temporary files
+*.log
+*.out
+*.toc
+
+# Ignore Python-specific files
+venv/
+env/
+ENV/
+.idea/
+*.DS_Store
+*.egg-info/
+pip-wheel-metadata/
+
+# Ignore VSCode and IDE specific files
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Ignore OS-specific files
+Thumbs.db
+.DS_Store

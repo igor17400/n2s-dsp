@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/proof.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=87e54e7c" />
@@ -185,8 +185,13 @@
 <li class="toctree-l1"><a class="reference internal" href="discrete-continous-dsp.html">Discrete and Continuous Signal Processing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="signals.html">Signals</a></li>
 <li class="toctree-l1"><a class="reference internal" href="analog-digital-domains.html">Analog and Digital Domains</a></li>
-<li class="toctree-l1"><a class="reference internal" href="notebooks.html">Content with notebooks</a></li>
-<li class="toctree-l1"><a class="reference internal" href="markdown-notebooks.html">Notebooks with MyST Markdown</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transformations-signals.html">Transformation of signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="even-odd-signal.html">Even and Odd Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="common-signals-engineering.html">Common Signals in Engineering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="singularity-functions.html">Singularity Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="convolution.html">Convolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fourier-series.html">Fourier Series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fourier-transform.html">Fourier Transform</a></li>
 </ul>
 
     </div>
@@ -436,7 +441,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/801bc7e1c2d3b7bafff4a84ca1b2900bc522e5b025d2cd768ab4dbb5dfff901b.png" src="_images/801bc7e1c2d3b7bafff4a84ca1b2900bc522e5b025d2cd768ab4dbb5dfff901b.png" />
+<img alt="_images/3cabcc3d0d79c643eb8e1d87b6a4fd379dc4215e9cb06e8d250330558d76cc9e.png" src="_images/3cabcc3d0d79c643eb8e1d87b6a4fd379dc4215e9cb06e8d250330558d76cc9e.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -485,7 +490,16 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9338fe98d886a08ecb6729e39f42843f224e6a80e8932bfae31493565cbd2330.png" src="_images/9338fe98d886a08ecb6729e39f42843f224e6a80e8932bfae31493565cbd2330.png" />
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">scipy.signal</span> <span class="kn">import</span> <span class="n">butter</span><span class="p">,</span> <span class="n">lfilter</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="c1"># Generate a noisy sine wave</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">noise</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">fs</span><span class="p">)</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;scipy&#39;
+</pre></div>
+</div>
 </div>
 </div>
 <div class="cell docutils container">

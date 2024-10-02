@@ -17,82 +17,51 @@ nbclient.exceptions.CellExecutionError: An error occurred while executing the fo
 ------------------
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.signal import butter, lfilter
+from scipy.signal import firwin, lfilter, freqz
 
-# Define the continuous signal
-def continuous_signal(t):
-    return np.sin(2 * np.pi * 5 * t) + 0.5 * np.sin(2 * np.pi * 50 * t)  # 5 Hz and 50 Hz sine waves
+# Sample rate and desired cutoff frequencies (in Hz).
+sample_rate = 1000.0  # Sampling rate in Hz
+nyquist_rate = sample_rate / 2.0  # Nyquist rate
+cutoff_freq = 100.0  # Desired cutoff frequency of the filter, Hz
 
-# Define the low-pass filter
-def butter_lowpass(cutoff, fs, order=5):
-    nyquist = 0.5 * fs
-    normal_cutoff = cutoff / nyquist
-    b, a = butter(order, normal_cutoff, btype='low', analog=False)
-    return b, a
+# Length of the filter (number of coefficients, i.e. the filter order + 1)
+numtaps = 29
 
-def lowpass_filter(data, cutoff, fs, order=5):
-    b, a = butter_lowpass(cutoff, fs, order=order)
-    y = lfilter(b, a, data)
-    return y
+# Use firwin to create a low-pass FIR filter
+fir_coeff = firwin(numtaps, cutoff_freq/nyquist_rate)
 
-# Parameters
-fs = 1000  # Original sampling frequency for the continuous signal
-tmin = 0
-tmax = 1
-t = np.linspace(tmin, tmax, int(fs * (tmax - tmin)), endpoint=False)
-x = continuous_signal(t)
+# Generate a sample signal: 2 Hz and 250 Hz sinusoids
+t = np.linspace(0, 1.0, int(sample_rate), endpoint=False)
+signal = np.sin(2 * np.pi * 2 * t) + np.sin(2 * np.pi * 250 * t)
 
-# Anti-aliasing filter parameters
-cutoff = 20  # Cutoff frequency of the low-pass filter
-order = 6    # Order of the filter
+# Apply the FIR filter to the signal
+filtered_signal = lfilter(fir_coeff, 1.0, signal)
 
-# Apply the anti-aliasing filter
-x_filtered = lowpass_filter(x, cutoff, fs, order)
+# Plot the frequency response of the filter
+w, h = freqz(fir_coeff, worN=8000)
+plt.figure(figsize=(12, 6))
+plt.plot(0.5*sample_rate*w/np.pi, np.abs(h), 'b')
+plt.title("Frequency Response of the Low-pass FIR Filter")
+plt.xlabel('Frequency (Hz)')
+plt.ylabel('Gain')
+plt.grid()
 
-# Sampling rates for demonstration
-fs_correct = 1000  # Much higher than Nyquist rate
-fs_incorrect = 5  # Below Nyquist rate
+# Plot the original and filtered signals
+plt.figure(figsize=(12, 6))
 
-# Generate sampled data
-n_correct = np.arange(tmin, tmax, 1/fs_correct)
-x_sampled_correct = continuous_signal(n_correct)
+plt.subplot(2, 1, 1)
+plt.plot(t, signal, label='Original signal')
+plt.title('Original Signal')
+plt.xlabel('Time [s]')
+plt.ylabel('Amplitude')
+plt.legend()
 
-n_incorrect = np.arange(tmin, tmax, 1/fs_incorrect)
-x_sampled_incorrect = continuous_signal(n_incorrect)
-
-# Generate filtered sampled data
-x_sampled_correct_filtered = lowpass_filter(x_sampled_correct, cutoff, fs_correct, order)
-x_sampled_incorrect_filtered = lowpass_filter(x_sampled_incorrect, cutoff, fs_incorrect, order)
-
-# Plotting
-fig, axs = plt.subplots(3, 1, figsize=(12, 12))
-
-# Plot the original and filtered continuous signal
-axs[0].plot(t, x, label='Original Signal')
-axs[0].plot(t, x_filtered, label='Filtered Signal (Anti-Aliasing)')
-axs[0].set_title('Original and Filtered Continuous Signal')
-axs[0].set_xlabel('Time [s]')
-axs[0].set_ylabel('Amplitude')
-axs[0].legend()
-axs[0].grid(True)
-
-# Plot the sampled signals (correct sampling rate)
-axs[1].stem(n_correct, x_sampled_correct, 'r', markerfmt='ro', basefmt=" ", label='Sampled Signal (fs = 1000 Hz)')
-axs[1].stem(n_correct, x_sampled_correct_filtered, 'b', markerfmt='bo', basefmt=" ", label='Filtered Sampled Signal (fs = 1000 Hz)')
-axs[1].set_title('Sampling with fs = 1000 Hz (Much Higher than Nyquist)')
-axs[1].set_xlabel('Time [s]')
-axs[1].set_ylabel('Amplitude')
-axs[1].legend()
-axs[1].grid(True)
-
-# Plot the sampled signals (incorrect sampling rate)
-axs[2].stem(n_incorrect, x_sampled_incorrect, 'r', markerfmt='ro', basefmt=" ", label='Sampled Signal (fs = 5 Hz)')
-axs[2].stem(n_incorrect, x_sampled_incorrect_filtered, 'b', markerfmt='bo', basefmt=" ", label='Filtered Sampled Signal (fs = 5 Hz)')
-axs[2].set_title('Sampling with fs = 5 Hz (Below Nyquist)')
-axs[2].set_xlabel('Time [s]')
-axs[2].set_ylabel('Amplitude')
-axs[2].legend()
-axs[2].grid(True)
+plt.subplot(2, 1, 2)
+plt.plot(t, filtered_signal, label='Filtered signal', color='orange')
+plt.title('Filtered Signal (Low-pass FIR Filter)')
+plt.xlabel('Time [s]')
+plt.ylabel('Amplitude')
+plt.legend()
 
 plt.tight_layout()
 plt.show()
@@ -101,45 +70,13 @@ plt.show()
 
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mValueError[0m                                Traceback (most recent call last)
-Cell [0;32mIn[5], line 48[0m
-[1;32m     46[0m [38;5;66;03m# Generate filtered sampled data[39;00m
-[1;32m     47[0m x_sampled_correct_filtered [38;5;241m=[39m lowpass_filter(x_sampled_correct, cutoff, fs_correct, order)
-[0;32m---> 48[0m x_sampled_incorrect_filtered [38;5;241m=[39m [43mlowpass_filter[49m[43m([49m[43mx_sampled_incorrect[49m[43m,[49m[43m [49m[43mcutoff[49m[43m,[49m[43m [49m[43mfs_incorrect[49m[43m,[49m[43m [49m[43morder[49m[43m)[49m
-[1;32m     50[0m [38;5;66;03m# Plotting[39;00m
-[1;32m     51[0m fig, axs [38;5;241m=[39m plt[38;5;241m.[39msubplots([38;5;241m3[39m, [38;5;241m1[39m, figsize[38;5;241m=[39m([38;5;241m12[39m, [38;5;241m12[39m))
+[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+Cell [0;32mIn[5], line 3[0m
+[1;32m      1[0m [38;5;28;01mimport[39;00m [38;5;21;01mnumpy[39;00m [38;5;28;01mas[39;00m [38;5;21;01mnp[39;00m
+[1;32m      2[0m [38;5;28;01mimport[39;00m [38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mpyplot[39;00m [38;5;28;01mas[39;00m [38;5;21;01mplt[39;00m
+[0;32m----> 3[0m [38;5;28;01mfrom[39;00m [38;5;21;01mscipy[39;00m[38;5;21;01m.[39;00m[38;5;21;01msignal[39;00m [38;5;28;01mimport[39;00m firwin, lfilter, freqz
+[1;32m      5[0m [38;5;66;03m# Sample rate and desired cutoff frequencies (in Hz).[39;00m
+[1;32m      6[0m sample_rate [38;5;241m=[39m [38;5;241m1000.0[39m  [38;5;66;03m# Sampling rate in Hz[39;00m
 
-Cell [0;32mIn[5], line 17[0m, in [0;36mlowpass_filter[0;34m(data, cutoff, fs, order)[0m
-[1;32m     16[0m [38;5;28;01mdef[39;00m [38;5;21mlowpass_filter[39m(data, cutoff, fs, order[38;5;241m=[39m[38;5;241m5[39m):
-[0;32m---> 17[0m     b, a [38;5;241m=[39m [43mbutter_lowpass[49m[43m([49m[43mcutoff[49m[43m,[49m[43m [49m[43mfs[49m[43m,[49m[43m [49m[43morder[49m[38;5;241;43m=[39;49m[43morder[49m[43m)[49m
-[1;32m     18[0m     y [38;5;241m=[39m lfilter(b, a, data)
-[1;32m     19[0m     [38;5;28;01mreturn[39;00m y
-
-Cell [0;32mIn[5], line 13[0m, in [0;36mbutter_lowpass[0;34m(cutoff, fs, order)[0m
-[1;32m     11[0m nyquist [38;5;241m=[39m [38;5;241m0.5[39m [38;5;241m*[39m fs
-[1;32m     12[0m normal_cutoff [38;5;241m=[39m cutoff [38;5;241m/[39m nyquist
-[0;32m---> 13[0m b, a [38;5;241m=[39m [43mbutter[49m[43m([49m[43morder[49m[43m,[49m[43m [49m[43mnormal_cutoff[49m[43m,[49m[43m [49m[43mbtype[49m[38;5;241;43m=[39;49m[38;5;124;43m'[39;49m[38;5;124;43mlow[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[43manalog[49m[38;5;241;43m=[39;49m[38;5;28;43;01mFalse[39;49;00m[43m)[49m
-[1;32m     14[0m [38;5;28;01mreturn[39;00m b, a
-
-File [0;32m~/miniforge3/envs/torch-gpu/lib/python3.10/site-packages/scipy/signal/_filter_design.py:3101[0m, in [0;36mbutter[0;34m(N, Wn, btype, analog, output, fs)[0m
-[1;32m   2980[0m [38;5;28;01mdef[39;00m [38;5;21mbutter[39m(N, Wn, btype[38;5;241m=[39m[38;5;124m'[39m[38;5;124mlow[39m[38;5;124m'[39m, analog[38;5;241m=[39m[38;5;28;01mFalse[39;00m, output[38;5;241m=[39m[38;5;124m'[39m[38;5;124mba[39m[38;5;124m'[39m, fs[38;5;241m=[39m[38;5;28;01mNone[39;00m):
-[1;32m   2981[0m [38;5;250m    [39m[38;5;124;03m"""[39;00m
-[1;32m   2982[0m [38;5;124;03m    Butterworth digital and analog filter design.[39;00m
-[1;32m   2983[0m 
-[0;32m   (...)[0m
-[1;32m   3099[0m [38;5;124;03m    >>> plt.show()[39;00m
-[1;32m   3100[0m [38;5;124;03m    """[39;00m
-[0;32m-> 3101[0m     [38;5;28;01mreturn[39;00m [43miirfilter[49m[43m([49m[43mN[49m[43m,[49m[43m [49m[43mWn[49m[43m,[49m[43m [49m[43mbtype[49m[38;5;241;43m=[39;49m[43mbtype[49m[43m,[49m[43m [49m[43manalog[49m[38;5;241;43m=[39;49m[43manalog[49m[43m,[49m
-[1;32m   3102[0m [43m                     [49m[43moutput[49m[38;5;241;43m=[39;49m[43moutput[49m[43m,[49m[43m [49m[43mftype[49m[38;5;241;43m=[39;49m[38;5;124;43m'[39;49m[38;5;124;43mbutter[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[43mfs[49m[38;5;241;43m=[39;49m[43mfs[49m[43m)[49m
-
-File [0;32m~/miniforge3/envs/torch-gpu/lib/python3.10/site-packages/scipy/signal/_filter_design.py:2556[0m, in [0;36miirfilter[0;34m(N, Wn, rp, rs, btype, analog, ftype, output, fs)[0m
-[1;32m   2553[0m     [38;5;28;01mif[39;00m fs [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m:
-[1;32m   2554[0m         [38;5;28;01mraise[39;00m [38;5;167;01mValueError[39;00m([38;5;124m"[39m[38;5;124mDigital filter critical frequencies must [39m[38;5;124m"[39m
-[1;32m   2555[0m                          [38;5;124mf[39m[38;5;124m"[39m[38;5;124mbe 0 < Wn < fs/2 (fs=[39m[38;5;132;01m{[39;00mfs[38;5;132;01m}[39;00m[38;5;124m -> fs/2=[39m[38;5;132;01m{[39;00mfs[38;5;241m/[39m[38;5;241m2[39m[38;5;132;01m}[39;00m[38;5;124m)[39m[38;5;124m"[39m)
-[0;32m-> 2556[0m     [38;5;28;01mraise[39;00m [38;5;167;01mValueError[39;00m([38;5;124m"[39m[38;5;124mDigital filter critical frequencies [39m[38;5;124m"[39m
-[1;32m   2557[0m                      [38;5;124m"[39m[38;5;124mmust be 0 < Wn < 1[39m[38;5;124m"[39m)
-[1;32m   2558[0m fs [38;5;241m=[39m [38;5;241m2.0[39m
-[1;32m   2559[0m warped [38;5;241m=[39m [38;5;241m2[39m [38;5;241m*[39m fs [38;5;241m*[39m tan(pi [38;5;241m*[39m Wn [38;5;241m/[39m fs)
-
-[0;31mValueError[0m: Digital filter critical frequencies must be 0 < Wn < 1
+[0;31mModuleNotFoundError[0m: No module named 'scipy'
 
