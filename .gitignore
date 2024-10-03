@@ -1,7 +1,7 @@
 # Ignore Jupyter Book build output
-_build/*
-_site/
-jupyter_execute/
+book/_build/*
+book/_site/
+book/jupyter_execute/
 **/.ipynb_checkpoints
 **/__pycache__/
 **/*.pyc

@@ -58,6 +58,7 @@
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'prf-prf';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
 
@@ -198,6 +199,13 @@
 <li class="toctree-l1"><a class="reference internal" href="convolution.html">Convolution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fourier-series.html">Fourier Series</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fourier-transform.html">Fourier Transform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fourier-transform-properties.html">Common Fourier Transform Properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fourier-transform-pairs.html">Fourier Transform Pairs and Its Applications</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="fourier-transform-periodic-functions.html">Fourier Transform of Periodic Functions</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="sampling-continous-time-signals.html">Sampling Continuous-Time Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="filters.html">Filters</a></li>
 </ul>
 
     </div>
@@ -351,20 +359,40 @@ document.write(`
    <h1>Proof Index</h1>
 
    <div class="modindex-jumpbox">
+   <a href="#cap-convolution-theorem"><strong>convolution-theorem</strong></a> | 
+   <a href="#cap-definition-0"><strong>definition-0</strong></a> | 
    <a href="#cap-discrete-energy"><strong>discrete-energy</strong></a> | 
    <a href="#cap-discrete-metric-energy"><strong>discrete-metric-energy</strong></a> | 
    <a href="#cap-discrete-norm-energy"><strong>discrete-norm-energy</strong></a> | 
    <a href="#cap-discrete-power"><strong>discrete-power</strong></a> | 
    <a href="#cap-discrete-rms"><strong>discrete-rms</strong></a> | 
    <a href="#cap-energy"><strong>energy</strong></a> | 
+   <a href="#cap-fourier-series"><strong>fourier-series</strong></a> | 
    <a href="#cap-metric-energy"><strong>metric-energy</strong></a> | 
    <a href="#cap-norm-energy"><strong>norm-energy</strong></a> | 
+   <a href="#cap-periodic-transform"><strong>periodic-transform</strong></a> | 
    <a href="#cap-power"><strong>power</strong></a> | 
    <a href="#cap-rms"><strong>rms</strong></a> | 
    <a href="#cap-sampling-theorem"><strong>sampling-theorem</strong></a>
    </div>
 
    <table class="indextable modindextable">
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-convolution-theorem"><td></td><td>
+       <strong>convolution-theorem</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="fourier-transform-periodic-functions.html#convolution-theorem"><code class="xref">convolution-theorem</code></a> <em>(fourier-transform-periodic-functions)</em></td><td>
+       <em>theorem</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-definition-0"><td></td><td>
+       <strong>definition-0</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="fourier-transform.html#definition-0"><code class="xref">definition-0</code></a> <em>(fourier-transform)</em></td><td>
+       <em>definition</em></td></tr>
      <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
      <tr class="cap" id="cap-discrete-energy"><td></td><td>
        <strong>discrete-energy</strong></td><td></td></tr>
@@ -414,6 +442,14 @@ document.write(`
        <a href="signals.html#energy"><code class="xref">energy</code></a> <em>(signals)</em></td><td>
        <em>definition</em></td></tr>
      <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-fourier-series"><td></td><td>
+       <strong>fourier-series</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="fourier-transform-periodic-functions.html#fourier-series"><code class="xref">fourier-series</code></a> <em>(fourier-transform-periodic-functions)</em></td><td>
+       <em>definition</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
      <tr class="cap" id="cap-metric-energy"><td></td><td>
        <strong>metric-energy</strong></td><td></td></tr>
      <tr>
@@ -429,6 +465,14 @@ document.write(`
        <td>
        <a href="signals.html#norm-energy"><code class="xref">norm-energy</code></a> <em>(signals)</em></td><td>
        <em>definition</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-periodic-transform"><td></td><td>
+       <strong>periodic-transform</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="fourier-transform-periodic-functions.html#periodic-transform"><code class="xref">periodic-transform</code></a> <em>(fourier-transform-periodic-functions)</em></td><td>
+       <em>theorem</em></td></tr>
      <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
      <tr class="cap" id="cap-power"><td></td><td>
        <strong>power</strong></td><td></td></tr>

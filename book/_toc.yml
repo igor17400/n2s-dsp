@@ -15,3 +15,8 @@ chapters:
 - file: convolution
 - file: fourier-series
 - file: fourier-transform
+- file: fourier-transform-properties
+- file: fourier-transform-pairs
+- file: fourier-transform-periodic-functions
+- file: sampling-continous-time-signals
+- file: filters
