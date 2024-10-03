@@ -1,0 +1,1011 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Analog and Digital Domains &#8212; A Not-Too-Short, Not-Quite-Long Summary of Signal Processing</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/proof.css?v=b4b7a797" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'analog-digital-domains';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Transformation of signals" href="transformations-signals.html" />
+    <link rel="prev" title="Signals" href="signals.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="A Not-Too-Short, Not-Quite-Long Summary of Signal Processing - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="A Not-Too-Short, Not-Quite-Long Summary of Signal Processing - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    A Not-Too-Short, Not-Quite-Long Summary of Signal Processing
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="intro-dsp.html">Introduction to Signal Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="discrete-continous-dsp.html">Discrete and Continuous Signal Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="signals.html">Signals</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Analog and Digital Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transformations-signals.html">Transformation of signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="even-odd-signal.html">Even and Odd Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="common-signals-engineering.html">Common Signals in Engineering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="singularity-functions.html">Singularity Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="convolution.html">Convolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fourier-series.html">Fourier Series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fourier-transform.html">Fourier Transform</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/igor17400/dsp-174" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/igor17400/dsp-174/issues/new?title=Issue%20on%20page%20%2Fanalog-digital-domains.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/analog-digital-domains.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Analog and Digital Domains</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sampling-theorem">Sampling Theorem</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-sampling-a-5-hz-sine-wave"><em>Example</em>: Sampling a 5 Hz Sine Wave</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#steps-in-digital-signal-processing">Steps in Digital Signal Processing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sampling">Sampling</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-sampling-a-sine-wave-in-python"><em>Example</em>: Sampling a Sine Wave in Python</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aliasing">Aliasing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-aliasing-in-python"><em>Example</em>: Aliasing in Python</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#digitalization">Digitalization</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example"><em>Example</em>:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#anti-aliasing-and-reconstruction-filters">Anti-Aliasing and Reconstruction Filters</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#anti-aliasing-filter">Anti-Aliasing Filter</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#why-is-anti-aliasing-important">Why is Anti-Aliasing Important?</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#characteristics-of-an-anti-aliasing-filter">Characteristics of an Anti-Aliasing Filter</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#anti-aliasing-filter-example">Anti-Aliasing Filter Example</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-of-an-anti-aliasing-filter"><em>Example</em> of an Anti-Aliasing Filter</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mathematical-representation">Mathematical Representation</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#code-explanation">Code explanation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="analog-and-digital-domains">
+<h1>Analog and Digital Domains<a class="headerlink" href="#analog-and-digital-domains" title="Link to this heading">#</a></h1>
+<p>A device that converts an analog signal into a digital one is aptly named an analog-to-digital converter (A/D). We can think of the A/D as being composed of two quantizers:</p>
+<ul class="simple">
+<li><p><strong>Sampler</strong>: Samples the signal at specific intervals.</p></li>
+<li><p><strong>Digitizer</strong>: Converts the sampled signal values into discrete digital values.</p></li>
+</ul>
+<p>Converting a continuous varying function into a discrete time sequence requires sampling the function at specific time instances. This may lead to a loss of information since many different continuous functions can correspond to the same sequence, but under certain conditions, there is no such loss.</p>
+<section id="sampling-theorem">
+<h2>Sampling Theorem<a class="headerlink" href="#sampling-theorem" title="Link to this heading">#</a></h2>
+<p>The sampling theorem states that a continuous signal can be completely represented in its samples and fully reconstructed if it has been sampled at a rate greater than twice its highest frequency component. This is known as the <span style="background-color: #FF90BC;">Nyquist rate</span>.</p>
+<div class="proof theorem admonition" id="sampling-theorem">
+<p class="admonition-title"><span class="caption-number">Theorem 1 </span></p>
+<section class="theorem-content" id="proof-content">
+<p>If a signal <span class="math notranslate nohighlight">\(x(t)\)</span> contains no frequencies higher than <span class="math notranslate nohighlight">\(B\)</span> Hz, it can be completely determined by its samples taken at a rate <span class="math notranslate nohighlight">\(f_s &gt; 2B\)</span> samples per second. The minimum sampling rate <span class="math notranslate nohighlight">\(f_s = 2B\)</span> is called the <strong>Nyquist rate</strong>.</p>
+<p>Mathematically, if <span class="math notranslate nohighlight">\(X(f) = 0\)</span> for <span class="math notranslate nohighlight">\(|f| &gt; B\)</span>, then <span class="math notranslate nohighlight">\(x(t)\)</span> can be reconstructed from its samples <span class="math notranslate nohighlight">\(x[n] = x(nT_s)\)</span>, where <span class="math notranslate nohighlight">\(T_s = 1/f_s\)</span>, using the formula:</p>
+<div class="math notranslate nohighlight">
+\[x(t) = \sum_{n=-\infty}^{\infty} x[n] \cdot \text{sinc}\left(\frac{t - nT_s}{T_s}\right)\]</div>
+<p>where <span class="math notranslate nohighlight">\(\text{sinc}(x) = \frac{\sin(\pi x)}{\pi x}\)</span>.</p>
+</section>
+</div><blockquote>
+<div><p><span class="math notranslate nohighlight">\(\textcolor{#FFC0D9}{\Longrightarrow}\)</span> If this theorem is not clear to you right now, don’t worry too much. We’ll explore other concepts that will help you understand it better. For now, imagine you want to create a smooth animation of a moving car. To do this, you need to take several pictures at a specific rate to capture the car’s motion accurately. This theorem states the minimum rate at which you need to take these pictures to avoid blurring or losing information about the car’s movement. Essentially, it defines the minimum sampling rate required to capture all the details of a signal without losing any information. For a more detailed explanation, please refer to this <a class="reference external" href="https://www.youtube.com/watch?v=Jv5FU8oUWEY">video</a> .</p>
+</div></blockquote>
+<section id="example-sampling-a-5-hz-sine-wave">
+<h3><em>Example</em>: Sampling a 5 Hz Sine Wave<a class="headerlink" href="#example-sampling-a-5-hz-sine-wave" title="Link to this heading">#</a></h3>
+<p>For this example, we want to demonstrate the importance of proper sampling by using a 5 Hz sine wave, <span class="math notranslate nohighlight">\(\sin(2\pi \cdot 5t)\)</span>. We’ll sample this sine wave using three different sampling frequencies: one correct, one incorrect, and one with an oversampling rate.</p>
+<ol class="arabic simple">
+<li><p><strong>Correct Sampling</strong>: According to the Nyquist theorem, the sampling frequency should be at least twice the maximum frequency of the signal to avoid aliasing. Since our signal has a frequency of 5 Hz, the minimum sampling frequency should be 10 Hz. We’ll use a sampling frequency of 15 Hz to ensure we sample correctly.</p></li>
+<li><p><strong>Incorrect Sampling</strong>: To show the effects of undersampling, we’ll use a sampling frequency of 5 Hz, which is below the Nyquist rate. This will result in aliasing, where different continuous signals become indistinguishable when sampled.</p></li>
+<li><p><strong>Oversampling</strong>: To show the effects of oversampling, we’ll use a sampling frequency of 30 Hz, which is well above the Nyquist rate. This will result in a highly accurate representation of the signal with more samples than necessary.</p></li>
+</ol>
+<p>The following plots illustrate the results of these sampling processes. The first plot shows the continuous 5 Hz sine wave and its samples taken at the correct sampling frequency of 15 Hz. The second plot shows the same continuous sine wave and its samples taken at the incorrect sampling frequency of 5 Hz. The third plot shows the continuous sine wave and its samples taken at an oversampling frequency of 30 Hz.</p>
+<p>In these plots:</p>
+<ul class="simple">
+<li><p><strong>Correct Sampling</strong>: The first subplot shows the continuous 5 Hz sine wave and its samples taken at 15 Hz. The sampled points align well with the original sine wave, demonstrating accurate sampling.</p></li>
+<li><p><strong>Incorrect Sampling</strong>: The second subplot shows the same continuous sine wave and its samples taken at 5 Hz. The sampled points do not align well with the original sine wave, demonstrating the effect of aliasing due to undersampling.</p></li>
+<li><p><strong>Oversampling</strong>: The third subplot shows the continuous 5 Hz sine wave and its samples taken at 30 Hz. The sampled points align very well with the original sine wave, demonstrating that oversampling can provide a highly accurate representation of the signal.</p></li>
+</ul>
+<p>In the code shown below:</p>
+<ul class="simple">
+<li><p>The first subplot shows the continuous 5 Hz sine wave and its samples taken at the correct sampling frequency of 15 Hz.</p></li>
+<li><p>The second subplot shows the same continuous sine wave and its samples taken at the incorrect sampling frequency of 5 Hz.</p></li>
+<li><p>The third subplot shows the continuous sine wave and its samples taken at an oversampling frequency of 30 Hz.</p></li>
+</ul>
+<p>This demonstrates the importance of sampling at the Nyquist rate or higher to accurately capture and reconstruct the original signal, and also shows that oversampling can provide a highly accurate representation of the signal.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Define the continuous signal</span>
+<span class="k">def</span> <span class="nf">continuous_signal</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span>  <span class="c1"># 5 Hz sine wave</span>
+
+<span class="c1"># Sampling parameters for correct sampling (Nyquist rate)</span>
+<span class="n">fs_correct</span> <span class="o">=</span> <span class="mi">15</span>  <span class="c1"># Sampling frequency (Hz)</span>
+<span class="n">T_s_correct</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">fs_correct</span>  <span class="c1"># Sampling period</span>
+
+<span class="c1"># Sampling parameters for incorrect sampling (below Nyquist rate)</span>
+<span class="n">fs_incorrect</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># Sampling frequency (Hz)</span>
+<span class="n">T_s_incorrect</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">fs_incorrect</span>  <span class="c1"># Sampling period</span>
+
+<span class="c1"># Sampling parameters for oversampling (above Nyquist rate)</span>
+<span class="n">fs_oversample</span> <span class="o">=</span> <span class="mi">30</span>  <span class="c1"># Sampling frequency (Hz)</span>
+<span class="n">T_s_oversample</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">fs_oversample</span>  <span class="c1"># Sampling period</span>
+
+<span class="c1"># Generate time vectors</span>
+<span class="n">t_continuous</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">t_sampled_correct</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">T_s_correct</span><span class="p">)</span>
+<span class="n">t_sampled_incorrect</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">T_s_incorrect</span><span class="p">)</span>
+<span class="n">t_sampled_oversample</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">T_s_oversample</span><span class="p">)</span>
+
+<span class="c1"># Generate signal values</span>
+<span class="n">y_continuous</span> <span class="o">=</span> <span class="n">continuous_signal</span><span class="p">(</span><span class="n">t_continuous</span><span class="p">)</span>
+<span class="n">y_sampled_correct</span> <span class="o">=</span> <span class="n">continuous_signal</span><span class="p">(</span><span class="n">t_sampled_correct</span><span class="p">)</span>
+<span class="n">y_sampled_incorrect</span> <span class="o">=</span> <span class="n">continuous_signal</span><span class="p">(</span><span class="n">t_sampled_incorrect</span><span class="p">)</span>
+<span class="n">y_sampled_oversample</span> <span class="o">=</span> <span class="n">continuous_signal</span><span class="p">(</span><span class="n">t_sampled_oversample</span><span class="p">)</span>
+
+<span class="c1"># Create subplots for steps</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Plotting steps for correct sampling</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">):</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_continuous</span><span class="p">,</span> <span class="n">y_continuous</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Continuous Signal&#39;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">t_sampled_correct</span><span class="p">[:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">y_sampled_correct</span><span class="p">[:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">markerfmt</span><span class="o">=</span><span class="s1">&#39;ro&#39;</span><span class="p">,</span> <span class="n">basefmt</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Sampled Signal&#39;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Correct Sampling&#39;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Time [s]&#39;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Step </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Plotting steps for incorrect sampling</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">):</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_continuous</span><span class="p">,</span> <span class="n">y_continuous</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Continuous Signal&#39;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">t_sampled_incorrect</span><span class="p">[:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">y_sampled_incorrect</span><span class="p">[:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">markerfmt</span><span class="o">=</span><span class="s1">&#39;ro&#39;</span><span class="p">,</span> <span class="n">basefmt</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Sampled Signal&#39;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Incorrect Sampling&#39;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Time [s]&#39;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Step </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Plotting steps for oversampling</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">):</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_continuous</span><span class="p">,</span> <span class="n">y_continuous</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Continuous Signal&#39;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">t_sampled_oversample</span><span class="p">[:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">y_sampled_oversample</span><span class="p">[:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">markerfmt</span><span class="o">=</span><span class="s1">&#39;ro&#39;</span><span class="p">,</span> <span class="n">basefmt</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Sampled Signal&#39;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Oversampling&#39;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Time [s]&#39;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Step </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/756bf2b8d479ad302710d02e28e1b476f4347eb093d1bbc0e30a3682de6fc214.png" src="_images/756bf2b8d479ad302710d02e28e1b476f4347eb093d1bbc0e30a3682de6fc214.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="steps-in-digital-signal-processing">
+<h2>Steps in Digital Signal Processing<a class="headerlink" href="#steps-in-digital-signal-processing" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Sampling</strong>: Converting the continuous-time signal into a discrete-time signal.</p></li>
+<li><p><strong>Quantization</strong>: Converting the continuous-amplitude signal into a discrete-amplitude signal.</p></li>
+<li><p><strong>Encoding</strong>: Converting the quantized signal into a digital code.</p></li>
+<li><p><strong>Transmission</strong>: Sending the digital signal over a communication channel.</p></li>
+<li><p><strong>Reconstruction</strong>: Converting the digital signal back into an analog signal.</p></li>
+</ol>
+</section>
+<section id="sampling">
+<h2>Sampling<a class="headerlink" href="#sampling" title="Link to this heading">#</a></h2>
+<p>Sampling involves measuring the amplitude of a continuous signal at regular intervals. The sampling rate (or sampling frequency) must be at least <span style="background-color: #F9F9E0;">twice the highest frequency present in the signal</span> to avoid <span style="background-color: #FF90BC;">aliasing</span>.</p>
+<section id="example-sampling-a-sine-wave-in-python">
+<h3><em>Example</em>: Sampling a Sine Wave in Python<a class="headerlink" href="#example-sampling-a-sine-wave-in-python" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Continuous signal</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>  <span class="c1"># Time vector</span>
+<span class="n">f</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># Frequency in Hz</span>
+<span class="n">continuous_signal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">f</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span>
+
+<span class="c1"># Sampled signal</span>
+<span class="n">fs</span> <span class="o">=</span> <span class="mi">20</span>  <span class="c1"># Sampling frequency in Hz</span>
+<span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="n">fs</span><span class="p">)</span>  <span class="c1"># Sampling instances</span>
+<span class="n">sampled_signal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">f</span> <span class="o">*</span> <span class="n">n</span><span class="p">)</span>
+
+<span class="c1"># Plotting</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">continuous_signal</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Continuous Signal&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">sampled_signal</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">markerfmt</span><span class="o">=</span><span class="s1">&#39;ro&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Sampled Signal&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time [s]&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Amplitude&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Sampling a Sine Wave&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/fb428f65d62e3b5ab2cbcdbeb24f827f84bc4817b0ac6103731b696d20ce1707.png" src="_images/fb428f65d62e3b5ab2cbcdbeb24f827f84bc4817b0ac6103731b696d20ce1707.png" />
+</div>
+</div>
+</section>
+<section id="aliasing">
+<h3>Aliasing<a class="headerlink" href="#aliasing" title="Link to this heading">#</a></h3>
+<p><span style="background-color: #FF90BC;">Aliasing</span> occurs when a signal is sampled at a rate below the Nyquist rate. It causes different signals to become indistinguishable (or aliases of one another) when sampled.</p>
+</section>
+<section id="example-aliasing-in-python">
+<h3><em>Example</em>: Aliasing in Python<a class="headerlink" href="#example-aliasing-in-python" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Continuous signal with higher frequency</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>  <span class="c1"># Time vector</span>
+<span class="n">f</span> <span class="o">=</span> <span class="mi">15</span>  <span class="c1"># Frequency in Hz (higher than Nyquist frequency for fs=20Hz)</span>
+<span class="n">continuous_signal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">f</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span>
+
+<span class="c1"># Sampled signal</span>
+<span class="n">fs</span> <span class="o">=</span> <span class="mi">20</span>  <span class="c1"># Sampling frequency in Hz</span>
+<span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="n">fs</span><span class="p">)</span>  <span class="c1"># Sampling instances</span>
+<span class="n">sampled_signal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">f</span> <span class="o">*</span> <span class="n">n</span><span class="p">)</span>
+
+<span class="c1"># Plotting</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">continuous_signal</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Continuous Signal (High Frequency)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">sampled_signal</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">markerfmt</span><span class="o">=</span><span class="s1">&#39;ro&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Sampled Signal&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time [s]&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Amplitude&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Aliasing Effect&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/28045eb40a11eb03459459c56c3c550eb0fac424dd4613d0a20dc593248e7f5d.png" src="_images/28045eb40a11eb03459459c56c3c550eb0fac424dd4613d0a20dc593248e7f5d.png" />
+</div>
+</div>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(\textcolor{#FFC0D9}{\Longrightarrow}\)</span> The Nyquist Rate is <span style="background-color: #F9F9E0;">twice the maximum component frequency</span> of the function being sampled. It’s the sampling frequency you would need to avoid <span style="background-color: #F9F9E0;">aliasing</span> in the digital signal.</p>
+</div></blockquote>
+</section>
+</section>
+<section id="digitalization">
+<h2>Digitalization<a class="headerlink" href="#digitalization" title="Link to this heading">#</a></h2>
+<p>There is no critical number of bits above which no information is lost. <span style="background-color: #F9F9E0;">The more bits we allocate per sample, the less noise we add to the signal</span>. Decreasing the number of bits monotonically reduces the Signal-to-Noise Ratio (SNR). Analog signal values outside the allowed range specified by the digitizer, i.e., the number of bits it can represent, are clipped to the maximum permitted values.</p>
+<section id="example">
+<h3><em>Example</em>:<a class="headerlink" href="#example" title="Link to this heading">#</a></h3>
+<p>This code creates a 4x4 grid of subplots, each demonstrating the effect of different sampling frequencies on a 5 Hz sine wave. The sampling frequencies range from below the Nyquist rate to much higher than the Nyquist rate:</p>
+<ul class="simple">
+<li><p>5 Hz: Below the Nyquist rate, resulting in aliasing.</p></li>
+<li><p>10 Hz: Nyquist rate, which is the minimum required sampling frequency.</p></li>
+<li><p>20 Hz: Above the Nyquist rate, providing a more accurate representation.</p></li>
+<li><p>40 Hz and higher: Increasingly accurate representations with more samples.</p></li>
+</ul>
+<p>In these plots:</p>
+<ul class="simple">
+<li><p><strong>Continuous Signal</strong>: The original 5 Hz sine wave.</p></li>
+<li><p><strong>Sampled Signal</strong>: The sampled points at each specified sampling frequency.</p></li>
+</ul>
+<p>By comparing these plots, you can clearly see the importance of sampling at or above the Nyquist rate to accurately capture and reconstruct the original signal.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Define the continuous signal</span>
+<span class="k">def</span> <span class="nf">continuous_signal</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span>  <span class="c1"># 5 Hz sine wave</span>
+
+<span class="c1"># Define time range</span>
+<span class="n">tmin</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">tmax</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="c1"># Generate continuous time vector</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">tmin</span><span class="p">,</span> <span class="n">tmax</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">continuous_signal</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+
+<span class="c1"># Define sampling frequencies</span>
+<span class="n">sampling_frequencies</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">600</span><span class="p">,</span> <span class="mi">700</span><span class="p">,</span> <span class="mi">800</span><span class="p">,</span> <span class="mi">900</span><span class="p">,</span> <span class="mi">1000</span><span class="p">]</span>
+
+<span class="c1"># Create a 4x4 grid of subplots</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">))</span>
+
+<span class="c1"># Plot the continuous signal in each subplot</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">axes</span><span class="o">.</span><span class="n">flat</span><span class="p">):</span>
+    <span class="n">fs</span> <span class="o">=</span> <span class="n">sampling_frequencies</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">T</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">fs</span>
+    <span class="n">nmin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">tmin</span> <span class="o">/</span> <span class="n">T</span><span class="p">)</span>
+    <span class="n">nmax</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">tmax</span> <span class="o">/</span> <span class="n">T</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">nmin</span><span class="p">,</span> <span class="n">nmax</span><span class="p">)</span>
+    <span class="n">x_sampled</span> <span class="o">=</span> <span class="n">continuous_signal</span><span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="n">T</span><span class="p">)</span>
+    
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Continuous Signal&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="n">T</span><span class="p">,</span> <span class="n">x_sampled</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Sampled Signal (fs = </span><span class="si">{</span><span class="n">fs</span><span class="si">}</span><span class="s1"> Hz)&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">tmin</span><span class="p">,</span> <span class="n">tmax</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Sampling at </span><span class="si">{</span><span class="n">fs</span><span class="si">}</span><span class="s1"> Hz&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Time [s]&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Amplitude&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/eff006ecb80fab5c0268979dc714809be7ebb1b8ceca0d164b7e46088862b793.png" src="_images/eff006ecb80fab5c0268979dc714809be7ebb1b8ceca0d164b7e46088862b793.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="anti-aliasing-and-reconstruction-filters">
+<h2>Anti-Aliasing and Reconstruction Filters<a class="headerlink" href="#anti-aliasing-and-reconstruction-filters" title="Link to this heading">#</a></h2>
+<p>When dealing with analog-to-digital conversion, it is crucial to understand the role of anti-aliasing and reconstruction filters. These filters ensure that the digital representation of a signal accurately reflects the original analog signal without introducing distortions or inaccuracies.</p>
+<section id="anti-aliasing-filter">
+<h3>Anti-Aliasing Filter<a class="headerlink" href="#anti-aliasing-filter" title="Link to this heading">#</a></h3>
+<p>An anti-aliasing filter is a low-pass filter applied to an analog signal before the sampling process. Its primary function is to <span style="background-color: #F9F9E0;">remove high-frequency components from the signal that could cause aliasing</span>. Aliasing occurs when high-frequency components of the signal are misinterpreted as lower frequencies during the sampling process, leading to distortions in the digitized signal.</p>
+<section id="why-is-anti-aliasing-important">
+<h4>Why is Anti-Aliasing Important?<a class="headerlink" href="#why-is-anti-aliasing-important" title="Link to this heading">#</a></h4>
+<p>According to the Nyquist-Shannon sampling theorem, to accurately reconstruct an analog signal from its samples, the sampling rate must be at least twice the highest frequency present in the signal. This minimum rate is known as the Nyquist rate. If a signal contains frequencies higher than half the sampling rate (the Nyquist frequency), these higher frequencies can alias, or fold back, into the lower frequency spectrum, causing distortion.</p>
+<p>To prevent this, an anti-aliasing filter is used to <span style="background-color: #F9F9E0;">attenuate the frequencies above the Nyquist frequency</span>, ensuring that only the frequencies that can be accurately sampled are present in the signal.</p>
+</section>
+<section id="characteristics-of-an-anti-aliasing-filter">
+<h4>Characteristics of an Anti-Aliasing Filter<a class="headerlink" href="#characteristics-of-an-anti-aliasing-filter" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Low-Pass Filter</strong>: Allows low-frequency components to pass through while attenuating high-frequency components.</p></li>
+<li><p><strong>Cutoff Frequency</strong>: Set just below the Nyquist frequency to ensure all frequencies above this point are removed or significantly reduced.</p></li>
+<li><p><strong>Filter Order</strong>: Higher-order filters provide steeper roll-off characteristics, meaning they more effectively attenuate frequencies above the cutoff frequency.</p></li>
+</ul>
+</section>
+</section>
+<section id="anti-aliasing-filter-example">
+<h3>Anti-Aliasing Filter Example<a class="headerlink" href="#anti-aliasing-filter-example" title="Link to this heading">#</a></h3>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(\textcolor{#FFC0D9}{\Longrightarrow}\)</span> Since we haven’t seen exactly what the Fourier transform means, assume that it’s a way of representing time functions in another domain (frequency domain) which makes computations easier. In other words, it’s like a <span style="background-color: #F9F9E0;">change of basis</span>.</p>
+</div></blockquote>
+<section id="example-of-an-anti-aliasing-filter">
+<h4><em>Example</em> of an Anti-Aliasing Filter<a class="headerlink" href="#example-of-an-anti-aliasing-filter" title="Link to this heading">#</a></h4>
+<p>Consider a signal with a maximum frequency component of 250 Hz. If we sample this signal at 1000 Hz, the Nyquist frequency is 500 Hz. To prevent aliasing, we use an anti-aliasing filter with a cutoff frequency just below 500 Hz, ideally around 100 Hz in this example.</p>
+<p>In practical terms, implementing an anti-aliasing filter might involve using a digital filter applied to the signal after it has been digitized but before it is downsampled.</p>
+</section>
+<section id="mathematical-representation">
+<h4>Mathematical Representation<a class="headerlink" href="#mathematical-representation" title="Link to this heading">#</a></h4>
+<p>Let <span class="math notranslate nohighlight">\(X(f)\)</span> represent the frequency domain representation of the signal <span class="math notranslate nohighlight">\(x(t)\)</span>. An ideal low-pass filter <span class="math notranslate nohighlight">\(H(f)\)</span> with a cutoff frequency <span class="math notranslate nohighlight">\(f_c\)</span> can be defined as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+H(f) = 
+\begin{cases} 
+1 &amp; |f| \leq f_c \\
+0 &amp; |f| &gt; f_c 
+\end{cases}
+\end{split}\]</div>
+<p>The filtered signal <span class="math notranslate nohighlight">\(Y(f)\)</span> in the frequency domain is then given by:</p>
+<div class="math notranslate nohighlight">
+\[
+Y(f) = X(f) \cdot H(f)
+\]</div>
+<p>By performing an inverse Fourier transform, we can obtain the time-domain representation of the filtered signal <span class="math notranslate nohighlight">\(y(t)\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+y(t) = \mathcal{F}^{-1}\{Y(f)\}
+\]</div>
+</section>
+</section>
+<section id="code-explanation">
+<h3>Code explanation<a class="headerlink" href="#code-explanation" title="Link to this heading">#</a></h3>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(\textcolor{#FFC0D9}{\Longrightarrow}\)</span> For the code shown below we use an FIR (Finite Impulse Response) for now understand this filter as a tool used in digital signal processing to modify signals, like audio or data. Imagine it as a recipe where you mix the current and past input signals using specific amounts (called coefficients) to create a new signal. Unlike other filters, an FIR filter uses only a fixed number of past inputs, making it easier to control and ensuring the output is stable and predictable. This makes FIR filters great for tasks like smoothing out noise or enhancing certain parts of a signal.</p>
+</div></blockquote>
+<ol class="arabic simple">
+<li><p><strong>Filter Design</strong>: The <code class="docutils literal notranslate"><span class="pre">firwin</span></code> function <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.firwin.html">documentation</a> is used to design a low-pass FIR filter with a cutoff frequency of 100 Hz and a filter length of 29 coefficients.</p></li>
+<li><p><strong>Signal Generation</strong>: A sample signal is created with both a 2 Hz sinusoid (low-frequency) and a 250 Hz sinusoid (high-frequency).</p></li>
+<li><p><strong>Filtering</strong>: The <code class="docutils literal notranslate"><span class="pre">lfilter</span></code> function applies the FIR filter to the signal.</p></li>
+<li><p><strong>Visualization</strong>: The frequency response of the filter is plotted, showing how it attenuates frequencies above the cutoff. The original and filtered signals are also plotted, demonstrating the effect of the filter in the time domain.</p></li>
+</ol>
+</section>
+<section id="conclusion">
+<h3>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading">#</a></h3>
+<p>The anti-aliasing filter plays a crucial role in digital signal processing by ensuring that high-frequency components are attenuated before downsampling, thereby preventing aliasing and preserving the integrity of the digitized signal.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">scipy.signal</span> <span class="kn">import</span> <span class="n">firwin</span><span class="p">,</span> <span class="n">lfilter</span><span class="p">,</span> <span class="n">freqz</span>
+
+<span class="c1"># Sample rate and desired cutoff frequencies (in Hz).</span>
+<span class="n">sample_rate</span> <span class="o">=</span> <span class="mf">1000.0</span>  <span class="c1"># Sampling rate in Hz</span>
+<span class="n">nyquist_rate</span> <span class="o">=</span> <span class="n">sample_rate</span> <span class="o">/</span> <span class="mf">2.0</span>  <span class="c1"># Nyquist rate</span>
+<span class="n">cutoff_freq</span> <span class="o">=</span> <span class="mf">100.0</span>  <span class="c1"># Desired cutoff frequency of the filter, Hz</span>
+
+<span class="c1"># Length of the filter (number of coefficients, i.e. the filter order + 1)</span>
+<span class="n">numtaps</span> <span class="o">=</span> <span class="mi">29</span>
+
+<span class="c1"># Use firwin to create a low-pass FIR filter</span>
+<span class="n">fir_coeff</span> <span class="o">=</span> <span class="n">firwin</span><span class="p">(</span><span class="n">numtaps</span><span class="p">,</span> <span class="n">cutoff_freq</span><span class="o">/</span><span class="n">nyquist_rate</span><span class="p">)</span>
+
+<span class="c1"># Generate a sample signal: 2 Hz and 250 Hz sinusoids</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">sample_rate</span><span class="p">),</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">signal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mi">250</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span>
+
+<span class="c1"># Apply the FIR filter to the signal</span>
+<span class="n">filtered_signal</span> <span class="o">=</span> <span class="n">lfilter</span><span class="p">(</span><span class="n">fir_coeff</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">signal</span><span class="p">)</span>
+
+<span class="c1"># Plot the frequency response of the filter</span>
+<span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">freqz</span><span class="p">(</span><span class="n">fir_coeff</span><span class="p">,</span> <span class="n">worN</span><span class="o">=</span><span class="mi">8000</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="mf">0.5</span><span class="o">*</span><span class="n">sample_rate</span><span class="o">*</span><span class="n">w</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">h</span><span class="p">),</span> <span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Frequency Response of the Low-pass FIR Filter&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Frequency (Hz)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Gain&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+
+<span class="c1"># Plot the original and filtered signals</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">signal</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Original signal&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Original Signal&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time [s]&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Amplitude&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">filtered_signal</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Filtered signal&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Filtered Signal (Low-pass FIR Filter)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time [s]&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Amplitude&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">line</span> <span class="mi">3</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="ne">----&gt; </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">scipy.signal</span> <span class="kn">import</span> <span class="n">firwin</span><span class="p">,</span> <span class="n">lfilter</span><span class="p">,</span> <span class="n">freqz</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="c1"># Sample rate and desired cutoff frequencies (in Hz).</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="n">sample_rate</span> <span class="o">=</span> <span class="mf">1000.0</span>  <span class="c1"># Sampling rate in Hz</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;scipy&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="signals.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Signals</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="transformations-signals.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Transformation of signals</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sampling-theorem">Sampling Theorem</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-sampling-a-5-hz-sine-wave"><em>Example</em>: Sampling a 5 Hz Sine Wave</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#steps-in-digital-signal-processing">Steps in Digital Signal Processing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sampling">Sampling</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-sampling-a-sine-wave-in-python"><em>Example</em>: Sampling a Sine Wave in Python</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aliasing">Aliasing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-aliasing-in-python"><em>Example</em>: Aliasing in Python</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#digitalization">Digitalization</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example"><em>Example</em>:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#anti-aliasing-and-reconstruction-filters">Anti-Aliasing and Reconstruction Filters</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#anti-aliasing-filter">Anti-Aliasing Filter</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#why-is-anti-aliasing-important">Why is Anti-Aliasing Important?</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#characteristics-of-an-anti-aliasing-filter">Characteristics of an Anti-Aliasing Filter</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#anti-aliasing-filter-example">Anti-Aliasing Filter Example</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-of-an-anti-aliasing-filter"><em>Example</em> of an Anti-Aliasing Filter</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mathematical-representation">Mathematical Representation</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#code-explanation">Code explanation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Igor L.R. Azevedo
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

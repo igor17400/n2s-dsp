@@ -1,0 +1,821 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Signals &#8212; A Not-Too-Short, Not-Quite-Long Summary of Signal Processing</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/proof.css?v=b4b7a797" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'signals';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Analog and Digital Domains" href="analog-digital-domains.html" />
+    <link rel="prev" title="Discrete and Continuous Signal Processing" href="discrete-continous-dsp.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="A Not-Too-Short, Not-Quite-Long Summary of Signal Processing - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="A Not-Too-Short, Not-Quite-Long Summary of Signal Processing - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    A Not-Too-Short, Not-Quite-Long Summary of Signal Processing
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="intro-dsp.html">Introduction to Signal Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="discrete-continous-dsp.html">Discrete and Continuous Signal Processing</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analog-digital-domains.html">Analog and Digital Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transformations-signals.html">Transformation of signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="even-odd-signal.html">Even and Odd Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="common-signals-engineering.html">Common Signals in Engineering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="singularity-functions.html">Singularity Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="convolution.html">Convolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fourier-series.html">Fourier Series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fourier-transform.html">Fourier Transform</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/igor17400/dsp-174" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/igor17400/dsp-174/issues/new?title=Issue%20on%20page%20%2Fsignals.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/signals.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Signals</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#definitions">Definitions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#continous-time-signals">Continous Time Signals</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#discrete-signals">Discrete Signals</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bandwidth">Bandwidth</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#characteristics-of-signals">Characteristics of Signals</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-vector-space-of-all-possible-signals">The Vector Space of All Possible Signals</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#examples"><em>Examples</em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analog-signal-example">Analog Signal Example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#digital-signal-example">Digital Signal Example</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vector-space-of-signals">Vector Space of Signals</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#shifted-unit-impulses-sui">Shifted Unit Impulses (SUI)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sinusoids">Sinusoids</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expansion-of-digital-signals">Expansion of Digital Signals</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#most-common-signals">Most Common Signals</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <style>
+table tr:hover {
+    background-color: #FFC0D9 !important;
+}
+</style>
+<section class="tex2jax_ignore mathjax_ignore" id="signals">
+<h1>Signals<a class="headerlink" href="#signals" title="Link to this heading">#</a></h1>
+<p>An <span style="background-color: #FF90BC;">analog signal</span> <span class="math notranslate nohighlight">\( s \)</span> is a finite real-valued function <span class="math notranslate nohighlight">\( s(t) \)</span> of a continuous variable <span class="math notranslate nohighlight">\( t \)</span> (called time), defined for all times on the interval <span class="math notranslate nohighlight">\( -\infty &lt; t &lt; +\infty \)</span>.</p>
+<p>A <span style="background-color: #FF90BC;">digital signal</span> <span class="math notranslate nohighlight">\( s \)</span> is a <strong>bounded</strong> discrete-valued sequence <span class="math notranslate nohighlight">\( S_n \)</span> with a single index <span class="math notranslate nohighlight">\( n \)</span> (called discrete time), defined for all time <span class="math notranslate nohighlight">\( n = -\infty, \cdots, +\infty \)</span>. <span style="background-color: #F9F9E0;">Bounded discrete values are exactly the kind of numbers represented by computer words with some finite number of bits.</span></p>
+<p>Finiteness is a physical requirement and comes in three varieties: <span style="background-color: #F9F9E0;">finite signal value</span>, finite energy, and finite bandwidth.</p>
+<section id="definitions">
+<h2>Definitions<a class="headerlink" href="#definitions" title="Link to this heading">#</a></h2>
+<section id="continous-time-signals">
+<h3>Continous Time Signals<a class="headerlink" href="#continous-time-signals" title="Link to this heading">#</a></h3>
+<div class="proof definition admonition" id="energy">
+<p class="admonition-title"><span class="caption-number">Definition 1 </span></p>
+<section class="definition-content" id="proof-content">
+<p>The <span style="background-color: #FF90BC;">energy</span> of a signal <span class="math notranslate nohighlight">\( s \)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[
+E_s = \int_{-\infty}^{\infty} |s(t)|^2 \, dt
+\]</div>
+</section>
+</div><div class="proof definition admonition" id="power">
+<p class="admonition-title"><span class="caption-number">Definition 2 </span></p>
+<section class="definition-content" id="proof-content">
+<p>The <span style="background-color: #FF90BC;">power</span> of a signal <span class="math notranslate nohighlight">\( s \)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[
+P_s = \lim_{T \to \infty} \frac{1}{2T} \int_{-T}^{T} |s(t)|^2 \, dt
+\]</div>
+</section>
+</div><div class="proof definition admonition" id="rms">
+<p class="admonition-title"><span class="caption-number">Definition 3 </span></p>
+<section class="definition-content" id="proof-content">
+<p>The Root Mean Square (RMS) of a signal <span class="math notranslate nohighlight">\( s \)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[
+RMS_s = \sqrt{\frac{1}{T} \int_{0}^{T} |s(t)|^2 \, dt}
+\]</div>
+</section>
+</div></section>
+<section id="discrete-signals">
+<h3>Discrete Signals<a class="headerlink" href="#discrete-signals" title="Link to this heading">#</a></h3>
+<p>For discrete signals, the definitions are adjusted to sums instead of integrals.</p>
+<div class="proof definition admonition" id="discrete-energy">
+<p class="admonition-title"><span class="caption-number">Definition 4 </span></p>
+<section class="definition-content" id="proof-content">
+<p>The energy of a discrete signal <span class="math notranslate nohighlight">\( S \)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[
+E_S = \sum_{n=-\infty}^{\infty} |S_n|^2
+\]</div>
+</section>
+</div><div class="proof definition admonition" id="discrete-power">
+<p class="admonition-title"><span class="caption-number">Definition 5 </span></p>
+<section class="definition-content" id="proof-content">
+<p>The power of a discrete signal <span class="math notranslate nohighlight">\( S \)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[
+P_S = \lim_{N \to \infty} \frac{1}{2N+1} \sum_{n=-N}^{N} |S_n|^2
+\]</div>
+</section>
+</div><div class="proof definition admonition" id="discrete-rms">
+<p class="admonition-title"><span class="caption-number">Definition 6 </span></p>
+<section class="definition-content" id="proof-content">
+<p>The Root Mean Square (RMS) of a discrete signal <span class="math notranslate nohighlight">\( S \)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[
+RMS_S = \sqrt{\frac{1}{N} \sum_{n=0}^{N-1} |S_n|^2}
+\]</div>
+</section>
+</div></section>
+<section id="bandwidth">
+<h3>Bandwidth<a class="headerlink" href="#bandwidth" title="Link to this heading">#</a></h3>
+<p>The definition of bandwidth will be better discussed later. However, its understanding can be introduced now. It’s a measure of speed, not size. A signal that fluctuates rapidly has a higher bandwidth than one that only varies slowly. <span style="background-color: #F9F9E0;">Requiring finite bandwidth imposes a smoothness constraint, disallowing sudden jump discontinuities and sharp corners.</span></p>
+</section>
+<section id="characteristics-of-signals">
+<h3>Characteristics of Signals<a class="headerlink" href="#characteristics-of-signals" title="Link to this heading">#</a></h3>
+<p>Signals are characterized as being deterministic or stochastic. If deterministic, they can be periodic or non-periodic. If stochastic, they can be stationary or non-stationary. Additionally, signals can be finite or infinite in time duration, and they can have finite bandwidth or a full spectrum.</p>
+</section>
+<section id="the-vector-space-of-all-possible-signals">
+<h3>The Vector Space of All Possible Signals<a class="headerlink" href="#the-vector-space-of-all-possible-signals" title="Link to this heading">#</a></h3>
+<p>Can all possible signals be described in terms of some set of basic signals?</p>
+<p>To use signals as bases for a vector space, they must obey the basic axioms of vector spaces. These include:</p>
+<ol class="arabic simple">
+<li><p><strong>Addition</strong>: Signal addition <span class="math notranslate nohighlight">\( s = s_1 + s_2 \)</span> according to <span class="math notranslate nohighlight">\( s(t) = x(t) + y(t) \)</span> and <span class="math notranslate nohighlight">\( S_n = X_n + Y_n \)</span>.</p></li>
+<li><p><strong>Zero Vector</strong>: The constant signal <span class="math notranslate nohighlight">\( S_n = 0 \)</span> for all times <span class="math notranslate nohighlight">\( n \)</span>.</p></li>
+<li><p><strong>Inverse</strong>: The inversion <span class="math notranslate nohighlight">\( -s \)</span> according to <span class="math notranslate nohighlight">\( s(t) = -x(t) \)</span> for all <span class="math notranslate nohighlight">\( t \)</span> and <span class="math notranslate nohighlight">\( S_n = -X_n \)</span> for all <span class="math notranslate nohighlight">\( n \)</span>.</p></li>
+<li><p><strong>Scalar Multiplication</strong>: Multiplication by a real number <span class="math notranslate nohighlight">\( a \)</span> as <span class="math notranslate nohighlight">\( s(t) = a x(t) \)</span> for all <span class="math notranslate nohighlight">\( t \)</span> and <span class="math notranslate nohighlight">\( S_n = a X_n \)</span> for all <span class="math notranslate nohighlight">\( n \)</span>.</p></li>
+<li><p><strong>Inner Product</strong>: The dot product as shown below:</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+\langle s_1, s_2 \rangle = \int_{-\infty}^{\infty} s_1(t) s_2(t) \, dt
+\]</div>
+<p>For discrete signals:</p>
+<div class="math notranslate nohighlight">
+\[
+\langle S_1, S_2 \rangle = \sum_{n=-\infty}^{\infty} S_1(n) S_2(n)
+\]</div>
+<ol class="arabic simple" start="6">
+<li><p><strong>Norm</strong>: The energy as defined below:</p></li>
+</ol>
+<div class="proof definition admonition" id="norm-energy">
+<p class="admonition-title"><span class="caption-number">Definition 7 </span></p>
+<section class="definition-content" id="proof-content">
+<p>The norm (or energy) of a signal <span class="math notranslate nohighlight">\( s \)</span> is:</p>
+<div class="math notranslate nohighlight">
+\[
+\|s\| = \sqrt{ \int_{-\infty}^{\infty} |s(t)|^2 \, dt }
+\]</div>
+</section>
+</div><p>For discrete signals:</p>
+<div class="proof definition admonition" id="discrete-norm-energy">
+<p class="admonition-title"><span class="caption-number">Definition 8 </span></p>
+<section class="definition-content" id="proof-content">
+<p>The norm (or energy) of a discrete signal <span class="math notranslate nohighlight">\( S \)</span> is:</p>
+<div class="math notranslate nohighlight">
+\[
+\|S\| = \sqrt{ \sum_{n=-\infty}^{\infty} |S_n|^2 }
+\]</div>
+</section>
+</div><ol class="arabic simple" start="7">
+<li><p><strong>Metric</strong>: The energy of the difference signal obeys all the requirements:</p></li>
+</ol>
+<div class="proof definition admonition" id="metric-energy">
+<p class="admonition-title"><span class="caption-number">Definition 9 </span></p>
+<section class="definition-content" id="proof-content">
+<p>The metric (or distance) between two signals <span class="math notranslate nohighlight">\( s_1 \)</span> and <span class="math notranslate nohighlight">\( s_2 \)</span> is:</p>
+<div class="math notranslate nohighlight">
+\[
+d(s_1, s_2) = \|s_1 - s_2\|
+\]</div>
+</section>
+</div><p>For discrete signals:</p>
+<div class="proof definition admonition" id="discrete-metric-energy">
+<p class="admonition-title"><span class="caption-number">Definition 10 </span></p>
+<section class="definition-content" id="proof-content">
+<p>The metric (or distance) between two discrete signals <span class="math notranslate nohighlight">\( S_1 \)</span> and <span class="math notranslate nohighlight">\( S_2 \)</span> is:</p>
+<div class="math notranslate nohighlight">
+\[
+d(S_1, S_2) = \|S_1 - S_2\|
+\]</div>
+</section>
+</div></section>
+</section>
+<hr class="docutils" />
+<section id="examples">
+<h2><em>Examples</em><a class="headerlink" href="#examples" title="Link to this heading">#</a></h2>
+<section id="analog-signal-example">
+<h3>Analog Signal Example<a class="headerlink" href="#analog-signal-example" title="Link to this heading">#</a></h3>
+<p>Consider an analog signal <span class="math notranslate nohighlight">\( s(t) = A \sin(2 \pi f t) \)</span> where <span class="math notranslate nohighlight">\( A \)</span> is the amplitude and <span class="math notranslate nohighlight">\( f \)</span> is the frequency. The energy of this signal is given by:</p>
+<div class="math notranslate nohighlight">
+\[
+E_s = \int_{-\infty}^{\infty} |A \sin(2 \pi f t)|^2 \, dt = \infty \quad (\text{for periodic signals})
+\]</div>
+<p>The power of the signal is:</p>
+<div class="math notranslate nohighlight">
+\[
+P_s = \lim_{T \to \infty} \frac{1}{2T} \int_{-T}^{T} |A \sin(2 \pi f t)|^2 \, dt = \frac{A^2}{2}
+\]</div>
+</section>
+<section id="digital-signal-example">
+<h3>Digital Signal Example<a class="headerlink" href="#digital-signal-example" title="Link to this heading">#</a></h3>
+<p>Consider a digital signal <span class="math notranslate nohighlight">\( S_n = A \sin(2 \pi f n) \)</span> where <span class="math notranslate nohighlight">\( A \)</span> is the amplitude and <span class="math notranslate nohighlight">\( f \)</span> is the frequency. The energy of this signal is:</p>
+<div class="math notranslate nohighlight">
+\[
+E_S = \sum_{n=-\infty}^{\infty} |A \sin(2 \pi f n)|^2 = \infty \quad (\text{for periodic signals})
+\]</div>
+<p>The power of the signal is:</p>
+<div class="math notranslate nohighlight">
+\[
+P_S = \lim_{N \to \infty} \frac{1}{2N+1} \sum_{n=-N}^{N} |A \sin(2 \pi f n)|^2 = \frac{A^2}{2}
+\]</div>
+</section>
+</section>
+<section id="vector-space-of-signals">
+<h2>Vector Space of Signals<a class="headerlink" href="#vector-space-of-signals" title="Link to this heading">#</a></h2>
+<p>Since signals form a vector space, the theorems of linear algebra guarantee that there is a <span style="background-color: #F9F9E0;">basis</span> <span class="math notranslate nohighlight">\( \{ \phi_k \} \)</span>, i.e., a set of signals in terms of which any signal <span class="math notranslate nohighlight">\( s \)</span> can be expanded:</p>
+<div class="math notranslate nohighlight">
+\[
+s = \sum_k c_k \phi_k
+\]</div>
+<p>From linear algebra, we know that <span style="background-color: #F9F9E0;">every vector has a basis</span>, but in general, this basis is not unique. Similarly, for the vector space of signals, there is a lot of flexibility in the choice of basis. The most common choices are based on signals we have already met, namely <span style="background-color: #F9F9E0;">shifted unit impulses (SUIs)</span> and sinusoids.</p>
+<section id="shifted-unit-impulses-sui">
+<h3>Shifted Unit Impulses (SUI)<a class="headerlink" href="#shifted-unit-impulses-sui" title="Link to this heading">#</a></h3>
+<p>Shifted Unit Impulses <span class="math notranslate nohighlight">\( S_n \)</span> are defined as:</p>
+<div class="math notranslate nohighlight">
+\[
+S_n = \delta_{nm}
+\]</div>
+<p>where <span class="math notranslate nohighlight">\( \delta_{nm} \)</span> equals one when <span class="math notranslate nohighlight">\( n = m \)</span>, and zero for all other times.</p>
+</section>
+<section id="sinusoids">
+<h3>Sinusoids<a class="headerlink" href="#sinusoids" title="Link to this heading">#</a></h3>
+<p>Sinusoids are another common basis for signals. When we represent a signal by expanding it in the basis of SUIs, we say that the signal is in the time domain. When we use the basis of sinusoids, we say that the signal is in the frequency domain.</p>
+</section>
+<section id="expansion-of-digital-signals">
+<h3>Expansion of Digital Signals<a class="headerlink" href="#expansion-of-digital-signals" title="Link to this heading">#</a></h3>
+<p>We can expand any digital signal in terms of SUIs as follows:</p>
+<div class="math notranslate nohighlight">
+\[
+S_n = \sum_{m=-\infty}^{\infty} S_m \delta_{nm}
+\]</div>
+<p>This proves that these signals span the entire space. No two SUIs overlap; they are orthogonal and linearly independent (no <span class="math notranslate nohighlight">\( S_{nm} \)</span> can be expanded in terms of others), and so they form a valid basis.</p>
+</section>
+</section>
+<section id="most-common-signals">
+<h2>Most Common Signals<a class="headerlink" href="#most-common-signals" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Signal Name</p></th>
+<th class="head"><p>Continuous Format</p></th>
+<th class="head"><p>Digital Format</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Unit Constant</p></td>
+<td><p><span class="math notranslate nohighlight">\( s(t) = A \)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\( S_n = A \)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Unit Step</p></td>
+<td><p><span class="math notranslate nohighlight">\( s(t) = u(t) \)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\( S_n = u[n] \)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Unit Impulse</p></td>
+<td><p><span class="math notranslate nohighlight">\( s(t) = \delta(t) \)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\( S_n = \delta[n] \)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Square Wave</p></td>
+<td><p><span class="math notranslate nohighlight">\( s(t) = A \cdot \text{sgn}(\sin(\omega t)) \)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\( S_n = A \cdot \text{sgn}(\sin(\omega n)) \)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Sinusoid</p></td>
+<td><p><span class="math notranslate nohighlight">\( s(t) = A \cdot \sin(\omega t + \phi) \)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\( S_n = A \cdot \sin(\omega n + \phi) \)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Damped Sinusoid</p></td>
+<td><p><span class="math notranslate nohighlight">\( s(t) = A e^{-\alpha t} \sin(\omega t) \)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\( S_n = A e^{-\alpha n} \sin(\omega n) \)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Real Exponential</p></td>
+<td><p><span class="math notranslate nohighlight">\( s(t) = A e^{\alpha t} \)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\( S_n = A e^{\alpha n} \)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Complex Sinusoid</p></td>
+<td><p><span class="math notranslate nohighlight">\( s(t) = A e^{j(\omega t + \phi)} \)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\( S_n = A e^{j(\omega n + \phi)} \)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Damped Complex Sinusoid</p></td>
+<td><p><span class="math notranslate nohighlight">\( s(t) = A e^{-\alpha t} e^{j(\omega t + \phi)} \)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\( S_n = A e^{-\alpha n} e^{j(\omega n + \phi)} \)</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="discrete-continous-dsp.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Discrete and Continuous Signal Processing</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="analog-digital-domains.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Analog and Digital Domains</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#definitions">Definitions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#continous-time-signals">Continous Time Signals</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#discrete-signals">Discrete Signals</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bandwidth">Bandwidth</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#characteristics-of-signals">Characteristics of Signals</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-vector-space-of-all-possible-signals">The Vector Space of All Possible Signals</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#examples"><em>Examples</em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analog-signal-example">Analog Signal Example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#digital-signal-example">Digital Signal Example</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vector-space-of-signals">Vector Space of Signals</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#shifted-unit-impulses-sui">Shifted Unit Impulses (SUI)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sinusoids">Sinusoids</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expansion-of-digital-signals">Expansion of Digital Signals</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#most-common-signals">Most Common Signals</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Igor L.R. Azevedo
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
