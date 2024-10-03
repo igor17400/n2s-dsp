@@ -12,7 +12,7 @@ This work aims to provide a summary of signal processing that achieves a balance
 
 ## Getting Started
 
-To use this summary just access the following link: https://github.com/igor17400/dsp-174.git
+To use this summary just access the following link: https://dsp.n2sqseries.com/
 
 ## Topics Covered
 
