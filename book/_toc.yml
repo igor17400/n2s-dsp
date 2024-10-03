@@ -19,3 +19,5 @@ chapters:
 - file: fourier-transform-pairs
 - file: fourier-transform-periodic-functions
 - file: filters
+- file: laplace
+- file: z-transform
