@@ -18,5 +18,4 @@ chapters:
 - file: fourier-transform-properties
 - file: fourier-transform-pairs
 - file: fourier-transform-periodic-functions
-- file: sampling-continous-time-signals
 - file: filters
