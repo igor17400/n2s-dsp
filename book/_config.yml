@@ -1,7 +1,7 @@
 # Book settings
 # Learn more at https://jupyterbook.org/customize/config.html
 
-title: "A Not-Too-Short, Not-Quite-Long Summary of Signal Processing"
+title: "A Not-Too-Short Summary of Signal Processing"
 author: "Igor L.R. Azevedo"
 logo: ./logo.png
 
@@ -30,6 +30,12 @@ repository:
 html:
   use_issues_button: true
   use_repository_button: true
+  extra_head:
+    - |
+      <meta property="og:title" content="A Not-Too-Short Summary of Signal Processing" />
+      <meta property="og:description" content="A concise yet detailed guide to signal processing" />
+      <meta property="og:image" content="https://dsp.n2sqseries.com/_static/logo.png" />
+      <meta property="og:url" content="https://dsp.n2sqseries.com" />
 
 sphinx:
   recursive_update: true
