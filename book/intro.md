@@ -4,7 +4,7 @@
 
 **Email:** *igorlima1740@gmail.com*
 
-**GitHub:** [https://github.com/igor17400/dsp-174](https://github.com/igor17400/dsp-174)
+**GitHub:** https://github.com/igor17400/n2s-dsp
 
 **Acronym**: _N2S_ (Not-Too-Short)
 
